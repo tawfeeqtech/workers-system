@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminDashboard\AdminNotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\{AdminAuthController, ClientAuthController, PostController, WorkerAuthController};
 
-Route::middleware(['DbBackup'])->prefix('auth')->group(function () {
+// middleware(['DbBackup'])-> سبب مشكلة ارسال الرسالة على البريد مرتين
+Route::prefix('auth')->group(function () {
     Route::controller(AdminAuthController::class)->prefix('admin')->group(function () {
         Route::post('login', 'login');
         Route::post('register', 'register');
@@ -39,4 +41,12 @@ Route::get('/unauthorized', function () {
 
 Route::controller(PostController::class)->prefix('worker/post')->group(function () {
     Route::post('add', 'store')->middleware('auth:worker');
+});
+
+Route::controller(AdminNotificationController::class)->middleware(['auth:admin'])->prefix('admin/notification')->group(function () {
+    Route::get('all', 'index');
+    Route::get('unread', 'unread');
+    Route::post('markReadAll', 'markReadAll');
+    Route::delete('deleteAll', 'deleteAll');
+    Route::delete('delete/{id}', 'delete');
 });
