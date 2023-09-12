@@ -1,0 +1,29 @@
+https://github.com/y0usefalsaadany/laraBackup
+php artisan db:alert
+
+عملية ارسال بريد باستخدام مكتبة
+عبر الرابط التالي "https://laravel.com/docs/10.x/mail#mailgun-driver"
+1- تثبيت المكتبة 
+    composer require symfony/mailgun-mailer symfony/http-client
+2- تعديل على ملف "config/mail.php"
+    'mailgun' => [
+        'transport' => 'mailgun',
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_SECRET'),
+    ],
+3- اضافة الاسماء السابقة في ملف ".env"
+    MAILGUN_DOMAIN = ''
+    MAILGUN_SECRET = ''
+4- جلب القيم الصحيحة من موقع 'mailgun'
+5- تحويل قيمة المتغير 'MAIL_MAILER' الى "mailgun"
+6-php artisan make:mail VerificationEmail
+-----------------------------
+------------------------------
+
+
+1-php artisan make:notification AdminPost
+2-
+    php artisan notifications:table
+    php artisan migrate
+
+
