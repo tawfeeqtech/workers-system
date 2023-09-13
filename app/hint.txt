@@ -32,3 +32,8 @@ php artisan db:alert
 
 
     php artisan make:observer PostObserver --model=Post
+
+
+    php artisan stub:publish
+    php artisan make:command CreateServiceClass
+    php artisan make:service StoringAdminData
