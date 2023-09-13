@@ -22,6 +22,7 @@ class StoringPost
     {
         $data = $data->except('photos');
         $data['worker_id'] = auth()->guard('worker')->id();
+        //$data['status'] = 'pending';
         $post = Post::create($data);
         return $post;
     }

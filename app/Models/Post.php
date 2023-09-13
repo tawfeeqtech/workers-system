@@ -17,4 +17,8 @@ class Post extends Model
         'worker_id',
     ];
 
+    public function worker()
+    {
+        return $this->belongsTo(Worker::class);
+    }
 }

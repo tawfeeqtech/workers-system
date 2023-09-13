@@ -27,3 +27,8 @@ php artisan db:alert
 2-
     php artisan notifications:table
     php artisan migrate
+
+
+
+
+    php artisan make:observer PostObserver --model=Post

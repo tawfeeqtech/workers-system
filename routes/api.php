@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboard\AdminNotificationController;
+use App\Http\Controllers\AdminDashboard\PostStatusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\{AdminAuthController, ClientAuthController, PostController, WorkerAuthController};
 
@@ -38,9 +39,18 @@ Route::get('/unauthorized', function () {
     ], 401);
 })->name('login');
 
+Route::prefix('admin')->group(function () {
+    Route::controller(PostStatusController::class)->middleware(['auth:admin'])->prefix('post')->group(function () {
+        Route::post('status', 'changeStatus');
+    });
+});
+
 
 Route::controller(PostController::class)->prefix('worker/post')->group(function () {
+    Route::get('single/{post_id}', 'viewPost');
     Route::post('add', 'store')->middleware('auth:worker');
+    Route::get('show', 'index')->middleware('auth:admin');
+    Route::get('approved', 'approved');
 });
 
 Route::controller(AdminNotificationController::class)->middleware(['auth:admin'])->prefix('admin/notification')->group(function () {
