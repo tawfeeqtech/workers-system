@@ -6,7 +6,7 @@ use App\Http\Requests\Client\ClientOrderRequset;
 use App\Interface\CrudRepoInterface;
 use App\Models\ClientOrder;
 
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 class ClientOrderController extends Controller
 {
@@ -26,5 +26,25 @@ class ClientOrderController extends Controller
             $query->where('worker_id', auth()->guard('worker')->id());
         })->get();
         return response()->json(['orders' => $order]);
+    }
+
+    public function updateOrder($id, Request $request)
+    {
+
+        $request->validate([
+            'status' => 'required|in:approved,rejected,pending',
+        ]);
+
+
+        $order = ClientOrder::where('id', $id)->whereHas('post', function ($query) {
+            $query->where('worker_id', auth()->guard('worker')->id());
+        })->first();
+        if ($order) {
+            $input = $request->only('status');
+
+            $order->setAttribute('status', $input['status'])->save();
+            return response()->json(['message' => 'updated']);
+        }
+        return response()->json(['message' => 'error'], 404);
     }
 }

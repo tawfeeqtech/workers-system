@@ -66,6 +66,8 @@ Route::prefix('worker')->group(function () {
         Route::get('show', 'index')->middleware('auth:admin');
         Route::get('approved', 'approved');
     });
-
-    Route::get('pendeing/orders', [ClientOrderController::class, 'workerOrder'])->middleware('auth:worker');
+    Route::controller(ClientOrderController::class)->middleware('auth:worker')->group(function () {
+        Route::get('pendeing/orders', 'workerOrder');
+        Route::post('update/order/{id}', 'updateOrder');
+    });
 });
