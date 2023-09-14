@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class StoringuserSevice
+class UserSevice
 {
     
 }

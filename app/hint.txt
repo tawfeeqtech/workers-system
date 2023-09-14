@@ -37,3 +37,4 @@ php artisan db:alert
     php artisan stub:publish
     php artisan make:command CreateServiceClass
     php artisan make:service StoringAdminData
+    php artisan make:interface Admin
