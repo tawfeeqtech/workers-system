@@ -20,7 +20,7 @@ class PostController extends Controller
 
     public function approved()
     {
-        $posts = Post::whereStatus('approved')->get()->makeHidden('status');
+        $posts = Post::with('worker:id,name')->whereStatus('approved')->get()->makeHidden('status');
         
         return response()->json([
             'posts' => $posts

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminDashboard\AdminNotificationController;
 use App\Http\Controllers\AdminDashboard\PostStatusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\{AdminAuthController, ClientAuthController, PostController, WorkerAuthController};
+use App\Http\Controllers\ClientOrderController;
 
 // middleware(['DbBackup'])-> سبب مشكلة ارسال الرسالة على البريد مرتين
 Route::prefix('auth')->group(function () {
@@ -39,24 +40,29 @@ Route::get('/unauthorized', function () {
     ], 401);
 })->name('login');
 
-Route::prefix('admin')->group(function () {
-    Route::controller(PostStatusController::class)->middleware(['auth:admin'])->prefix('post')->group(function () {
+Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
+    Route::controller(PostStatusController::class)->prefix('post')->group(function () {
         Route::post('status', 'changeStatus');
+    });
+
+    Route::controller(AdminNotificationController::class)->prefix('notification')->group(function () {
+        Route::get('all', 'index');
+        Route::get('unread', 'unread');
+        Route::post('markReadAll', 'markReadAll');
+        Route::delete('deleteAll', 'deleteAll');
+        Route::delete('delete/{id}', 'delete');
     });
 });
 
+Route::prefix('client')->group(function () {
+    Route::controller(ClientOrderController::class)->prefix('order')->group(function () {
+        Route::post('request', 'addOrder')->middleware(['auth:client']);
+    });
+});
 
 Route::controller(PostController::class)->prefix('worker/post')->group(function () {
     Route::get('single/{post_id}', 'viewPost');
     Route::post('add', 'store')->middleware('auth:worker');
     Route::get('show', 'index')->middleware('auth:admin');
     Route::get('approved', 'approved');
-});
-
-Route::controller(AdminNotificationController::class)->middleware(['auth:admin'])->prefix('admin/notification')->group(function () {
-    Route::get('all', 'index');
-    Route::get('unread', 'unread');
-    Route::post('markReadAll', 'markReadAll');
-    Route::delete('deleteAll', 'deleteAll');
-    Route::delete('delete/{id}', 'delete');
 });
