@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\ClientOrderController;
+use App\Http\Controllers\API\ClientOrderController;
 use App\Interface\CrudRepoInterface;
 use App\Repository\ClientOrderRepo;
 use Illuminate\Support\ServiceProvider;
