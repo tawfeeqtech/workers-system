@@ -18,9 +18,16 @@ class StoringPost
         $this->model = new Post();
     }
 
+    function adminPercent($price)
+    {
+        $discount = $price * 0.05;
+        return $price - $discount;
+    }
+
     function storePost($data)
     {
         $data = $data->except('photos');
+        $data['price'] = $this->adminPercent($data['price']);
         $data['worker_id'] = auth()->guard('worker')->id();
         //$data['status'] = 'pending';
         $post = Post::create($data);
@@ -50,12 +57,12 @@ class StoringPost
             DB::beginTransaction();
             $post = $this->storePost($request);
             if ($request->hasFile('photos')) {
-                $postPhotos = $this->storePostPhotos($request, $post->id);
+                $this->storePostPhotos($request, $post->id);
             }
             $this->sendAdminNotification($post);
             DB::commit();
             return response()->json([
-                'message' => "post has been created successfuly",
+                'message' => "post has been created successfuly,your price is {$post->price}",
             ], 200);
         } catch (Exception $e) {
             DB::rollBack();
