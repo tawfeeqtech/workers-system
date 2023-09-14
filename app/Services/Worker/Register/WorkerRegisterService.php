@@ -39,7 +39,7 @@ class WorkerRegisterService extends BothRegister
             // $this->validation($request);
             $email = $this->store($request);
             $entity = $this->generateToken($this->model, $email);
-            $this->sendEmail($entity);
+            // $this->sendEmail($entity);
             DB::commit();
             return response()->json([
                 'message' => "your account has been Created please check your email",

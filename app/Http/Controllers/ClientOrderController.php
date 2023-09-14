@@ -19,4 +19,12 @@ class ClientOrderController extends Controller
     {
         return $this->crudRepo->store($requset);
     }
+
+    public function workerOrder()
+    {
+        $order = ClientOrder::with('post', 'client')->whereStatus('pending')->whereHas('post', function ($query) {
+            $query->where('worker_id', auth()->guard('worker')->id());
+        })->get();
+        return response()->json(['orders' => $order]);
+    }
 }

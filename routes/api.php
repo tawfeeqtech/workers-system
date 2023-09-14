@@ -59,10 +59,13 @@ Route::prefix('client')->group(function () {
         Route::post('request', 'addOrder')->middleware(['auth:client']);
     });
 });
+Route::prefix('worker')->group(function () {
+    Route::controller(PostController::class)->prefix('post')->group(function () {
+        Route::get('single/{post_id}', 'viewPost');
+        Route::post('add', 'store')->middleware('auth:worker');
+        Route::get('show', 'index')->middleware('auth:admin');
+        Route::get('approved', 'approved');
+    });
 
-Route::controller(PostController::class)->prefix('worker/post')->group(function () {
-    Route::get('single/{post_id}', 'viewPost');
-    Route::post('add', 'store')->middleware('auth:worker');
-    Route::get('show', 'index')->middleware('auth:admin');
-    Route::get('approved', 'approved');
+    Route::get('pendeing/orders', [ClientOrderController::class, 'workerOrder'])->middleware('auth:worker');
 });
