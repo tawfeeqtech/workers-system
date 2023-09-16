@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdminDashboard\{AdminNotificationController, PostStatusController};
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\{AdminAuthController, ClientAuthController, ClientOrderController, PostController, WorkerAuthController, WorkerReviewController};
+use App\Http\Controllers\API\{AdminAuthController, ClientAuthController, ClientOrderController, PostController, WorkerAuthController, WorkerProfileController, WorkerReviewController};
 
 // middleware(['DbBackup'])-> سبب مشكلة ارسال الرسالة على البريد مرتين
 Route::prefix('auth')->group(function () {
@@ -74,4 +74,9 @@ Route::prefix('worker')->group(function () {
         Route::post('/', 'store')->middleware('auth:client');
         Route::get('post/{postId}', 'postRate');
     });
+
+    Route::controller(WorkerProfileController::class)->prefix('profile')->group(function () {
+        Route::get('', 'userProfile');
+    });
+   
 });
