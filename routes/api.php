@@ -77,6 +77,8 @@ Route::prefix('worker')->group(function () {
 
     Route::controller(WorkerProfileController::class)->prefix('profile')->group(function () {
         Route::get('', 'userProfile');
+        Route::get('edit', 'edit');
+        Route::post('update', 'update');
     });
    
 });
