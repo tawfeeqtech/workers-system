@@ -38,3 +38,7 @@ php artisan db:alert
     php artisan make:command CreateServiceClass
     php artisan make:service StoringAdminData
     php artisan make:interface Admin
+
+
+
+    laravel-query-builder filtering // https://spatie.be/docs/laravel-query-builder/v5/features/filtering
