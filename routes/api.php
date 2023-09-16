@@ -72,13 +72,14 @@ Route::prefix('worker')->group(function () {
 
     Route::controller(WorkerReviewController::class)->prefix('reviews')->group(function () {
         Route::post('/', 'store')->middleware('auth:client');
-        Route::get('post/{postId}', 'postRate');
+        Route::get('post/{postId}', 'postRate')->middleware('auth:worker');
     });
 
-    Route::controller(WorkerProfileController::class)->prefix('profile')->group(function () {
+    Route::controller(WorkerProfileController::class)->middleware('auth:worker')->prefix('profile')->group(function () {
         Route::get('', 'userProfile');
         Route::get('edit', 'edit');
         Route::post('update', 'update');
+        Route::delete('posts/delete', 'delete');
     });
    
 });

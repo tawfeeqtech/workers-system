@@ -37,6 +37,7 @@ class Worker extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password',
+        'status',
         'verification_token',
         'verified_at',
     ];
