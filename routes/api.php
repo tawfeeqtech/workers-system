@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminDashboard\{AdminNotificationController, PostStatusController};
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\{AdminAuthController, ClientAuthController, ClientOrderController, PostController, WorkerAuthController, WorkerProfileController, WorkerReviewController};
+use App\Http\Controllers\AdminDashboard\{AdminNotificationController, PostStatusController};
+use App\Http\Controllers\API\{AdminAuthController, ClientAuthController, ClientOrderController, ClientPaymentController, PostController, WorkerAuthController, WorkerProfileController, WorkerReviewController};
 
 // middleware(['DbBackup'])-> سبب مشكلة ارسال الرسالة على البريد مرتين
 Route::prefix('auth')->group(function () {
@@ -53,8 +53,13 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
 });
 
 Route::prefix('client')->group(function () {
-    Route::controller(ClientOrderController::class)->prefix('order')->group(function () {
-        Route::post('request', 'addOrder')->middleware(['auth:client']);
+    Route::controller(ClientOrderController::class)->middleware('auth:client')->prefix('order')->group(function () {
+        Route::post('request', 'addOrder');
+        Route::get('approved', 'approvedOrders');
+    });
+
+    Route::controller(ClientPaymentController::class)->prefix('payment')->group(function () {
+        Route::get('/{serviceId}', 'payment')->middleware('auth:client');
     });
 });
 

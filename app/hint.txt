@@ -42,3 +42,13 @@ php artisan db:alert
 
 
     laravel-query-builder filtering // https://spatie.be/docs/laravel-query-builder/v5/features/filtering
+
+
+https://vendors.paddle.com/onboarding/get-started
+
+https://laravel.com/docs/10.x/cashier-paddle#installation
+https://vendors.paddle.com/public-key
+https://sandbox-vendors.paddle.com/onboarding/get-started
+
+ngrok download // for local paddle
+    ngrok http {host port}
