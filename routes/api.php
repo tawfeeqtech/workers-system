@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminDashboard\{AdminNotificationController, PostStatusController};
-use App\Http\Controllers\API\{AdminAuthController, ClientAuthController, ClientOrderController, ClientPaymentController, PostController, WorkerAuthController, WorkerProfileController, WorkerReviewController};
+use App\Http\Controllers\API\{AdminAuthController, ClientAuthController, ClientOrderController, ClientPaymentController, FileController, PostController, WorkerAuthController, WorkerProfileController, WorkerReviewController};
 
 // middleware(['DbBackup'])-> سبب مشكلة ارسال الرسالة على البريد مرتين
 Route::prefix('auth')->group(function () {
@@ -87,4 +87,8 @@ Route::prefix('worker')->group(function () {
         Route::delete('posts/delete', 'delete');
     });
    
+    Route::controller(FileController::class)->prefix('files')->middleware('auth:worker')->group(function () {
+        Route::get('export', 'export');
+        Route::post('import', 'import');
+    });
 });

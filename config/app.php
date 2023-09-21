@@ -171,10 +171,11 @@ return [
 
         App\Providers\CrudRepoProvider::class,
 
-        Yousefpackage\LaraBackup\Providers\LaraBackupServiceProvider::class,
-        Yousefpackage\LaraBackup\Providers\BackupServiceProvider::class,
-        Yousefpackage\LaraBackup\Providers\RouteServiceProvider::class,
+        // Yousefpackage\LaraBackup\Providers\LaraBackupServiceProvider::class,
+        // Yousefpackage\LaraBackup\Providers\BackupServiceProvider::class,
+        // Yousefpackage\LaraBackup\Providers\RouteServiceProvider::class,
 
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -189,6 +190,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

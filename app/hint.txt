@@ -1,5 +1,5 @@
 https://www.youtube.com/watch?v=W0vjS03o1mo&list=PLdRIeXQFHrBKQ1V_qU3wbPp0-uGvt5hqn&ab_channel=softwarejoe
-
+https://github.com/y0usefalsaadany/workers-system/blob/main/app/Repository/ClientOrderRepo.php
 https://github.com/y0usefalsaadany/laraBackup
 php artisan db:alert
 
@@ -52,3 +52,7 @@ https://sandbox-vendors.paddle.com/onboarding/get-started
 
 ngrok download // for local paddle
     ngrok http {host port}
+
+
+
+https://docs.laravel-excel.com/3.1/imports/
